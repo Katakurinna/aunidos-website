@@ -8,6 +8,7 @@ import me.cerratolabs.aunidosredirect.dto.Provincia;
 import me.cerratolabs.aunidosredirect.request.ProvinciaRequest;
 import me.cerratolabs.aunidosredirect.response.ProvinciaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;

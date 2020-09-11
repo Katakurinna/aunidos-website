@@ -23,8 +23,12 @@ export class ProvinciaComponent implements OnInit {
         this.socialMedia = params.socialMedia;
         const request: ProvinciaRequest = {provincia: {name: this.name, socialMedia: this.socialMedia}};
         this.provinciaService.getProvincia(request).subscribe( provincia => {
-        this.provincia = provincia.provincia;
-        window.location.href = this.provincia.url;
+          this.provincia = provincia.provincia;
+          if(this.provincia.url || this.provincia.url === null) {
+            window.location.href = this.provincia.url;
+          } else {
+            window.alert('La provincia o red social no existe');
+          }
         });
     });
 
