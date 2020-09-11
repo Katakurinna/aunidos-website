@@ -1,6 +1,7 @@
 package me.cerratolabs.aunidosredirect.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,9 @@ public class AUnidosBeans  {
     public Environment env;
 
     @Bean
+    @ConfigurationProperties(prefix = "datasource.primary")
     public DataSource getDataSource() {
+
       /*  DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("spring.datasource.driverClassName"));
         dataSource.setUrl(env.getProperty("spring.datasource.url"));
