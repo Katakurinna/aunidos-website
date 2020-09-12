@@ -1,5 +1,15 @@
+import {
+    ReasonPhrases,
+    StatusCodes,
+    getReasonPhrase,
+    getStatusCode,
+} from 'http-status-codes';
 import { Provincia } from 'src/app/dto/Provincia';
+import { SocialMedia } from 'src/app/dto/SocialMedia';
 
 export class ProvinciaResponse {
-    provincia: Provincia;
+    socialMedia: SocialMedia;
+    status: StatusCodes;
+    idTransaccion: String;
+
 }

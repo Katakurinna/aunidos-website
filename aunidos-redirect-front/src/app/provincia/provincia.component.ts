@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProvinciaService } from '../provincia.service';
+import { ProvinciaService } from '../services/provincia-service/provincia.service';
 import { Provincia } from '../dto/Provincia';
 import { ProvinciaRequest } from '../services/provincia-service/ProvinciaRequest';
 
@@ -24,13 +24,12 @@ export class ProvinciaComponent implements OnInit {
         this.socialMedia = params.socialMedia;
         this.messageClass = 'alert alert-warning';
         this.messageText = `Intentando redirigir a ${this.socialMedia} de la provincia de ${this.name}`;
-        const request: ProvinciaRequest = {provincia: {name: this.name, socialMedia: this.socialMedia}};
-        this.provinciaService.getProvincia(request).toPromise().then(provincia => {
-          this.provincia = provincia.provincia;
-          if(this.provincia.url || this.provincia.url === null) {
+        const request: ProvinciaRequest = {socialMedia: {name: this.socialMedia, provincia: {name: this.name}}};
+        this.provinciaService.getProvincia(request).toPromise().then(reponse => {
+          if(reponse.socialMedia.url || reponse.socialMedia.url === null) {
             this.messageClass = 'alert alert-success';
             this.messageText = `Redirigiendo a ${this.socialMedia} de la provincia de ${this.name}`;
-            window.location.href = this.provincia.url;
+            window.location.href = reponse.socialMedia.url;
           } else {
             this.messageClass = 'alert alert-danger';
             this.messageText = `No se ha podido redirigir a ${this.socialMedia} de la provincia de ${this.name}`;

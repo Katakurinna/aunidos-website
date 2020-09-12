@@ -1,5 +1,4 @@
 export interface Provincia {
+    id?: number;
     name?: string;
-    socialMedia?: string;
-    url?: string;
 }
