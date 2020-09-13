@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProvinciaService } from '../services/provincia-service/provincia.service';
-import { Provincia } from '../dto/Provincia';
-import { ProvinciaRequest } from '../services/provincia-service/ProvinciaRequest';
-import { SocialMedia } from '../dto/SocialMedia';
-import { StatusCodes } from 'http-status-codes';
-import { HttpStatus, HttpStatusEnum } from '../dto/HttpStatus';
-import { IfStmt } from '@angular/compiler';
-import { ProvinciaResponse } from '../services/provincia-service/ProvinciaResponse';
+import { HttpStatusEnum } from 'src/app/commons/dto/HttpStatus';
+import { Provincia, ProvinciaEnum } from 'src/app/commons/dto/Provincia';
+import { SocialMedia, SocialMediaEnum } from 'src/app/commons/dto/SocialMedia';
+import { ProvinciaService } from 'src/app/commons/services/provincia-service/provincia.service';
+import { ProvinciaRequest } from 'src/app/commons/services/provincia-service/ProvinciaRequest';
+import { ProvinciaResponse } from 'src/app/commons/services/provincia-service/ProvinciaResponse';
 
 @Component({
   selector: 'app-provincia',

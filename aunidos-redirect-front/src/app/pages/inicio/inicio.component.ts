@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { Provincia, ProvinciaEnum } from '../dto/Provincia';
-import { SocialMedia, SocialMediaEnum } from '../dto/SocialMedia';
-
+import { Provincia, ProvinciaEnum } from 'src/app/commons/dto/Provincia';
+import { SocialMedia, SocialMediaEnum } from 'src/app/commons/dto/SocialMedia';
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',

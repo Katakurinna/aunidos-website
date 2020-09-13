@@ -4,7 +4,7 @@ import {
     getReasonPhrase,
     getStatusCode,
 } from 'http-status-codes';
-import { HttpStatus, HttpStatusEnum } from 'src/app/dto/HttpStatus';
+import { HttpStatusEnum } from '../../dto/HttpStatus';
 
 export class ProvinciaResponse {
     url: string;
