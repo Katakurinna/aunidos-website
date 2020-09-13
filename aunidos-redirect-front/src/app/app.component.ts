@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Provincia, ProvinciaEnum } from './dto/Provincia';
 
 @Component({
   selector: 'app-root',

@@ -1,24 +1,18 @@
 package me.cerratolabs.aunidosredirect.db;
 
-import me.cerratolabs.aunidosredirect.dto.Provincia;
-import me.cerratolabs.aunidosredirect.dto.SocialMedia;
+import me.cerratolabs.aunidosredirect.dto.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 public class DatabaseService {
-    @Autowired private ProvinciaRepository provinciaRepository;
-    @Autowired private SocialMediaRepository socialMediaRepository;
 
-    public SocialMedia findProvinciaByNameAndProvincia(String name, Integer provincia){
-       return socialMediaRepository.findProvinciaByNameAndProvincia(name, provincia);
-    }
-    public Provincia findByName(String name){
-        return provinciaRepository.findByName(name);
-    }
+    @Autowired URLRepository urlRepository;
 
-    public Long findIdByName(String name){
-        return provinciaRepository.findIdByName(name);
+    public String findURLByProvinciaAndAndSocialMedia(Integer provincia, Integer socialMedia) {
+        URL url = urlRepository.findURLByProvinciaAndAndSocialMedia(provincia, socialMedia);
+        if (ObjectUtils.isEmpty(url)) return null;
+        return url.getUrlOrNull();
     }
-
 }

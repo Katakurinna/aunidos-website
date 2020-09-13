@@ -4,12 +4,11 @@ import {
     getReasonPhrase,
     getStatusCode,
 } from 'http-status-codes';
-import { Provincia } from 'src/app/dto/Provincia';
-import { SocialMedia } from 'src/app/dto/SocialMedia';
+import { HttpStatus, HttpStatusEnum } from 'src/app/dto/HttpStatus';
 
 export class ProvinciaResponse {
-    socialMedia: SocialMedia;
-    status: StatusCodes;
+    url: string;
+    status: HttpStatusEnum;
     idTransaccion: String;
 
 }

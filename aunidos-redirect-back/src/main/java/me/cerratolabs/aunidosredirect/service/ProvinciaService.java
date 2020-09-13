@@ -1,29 +1,23 @@
 package me.cerratolabs.aunidosredirect.service;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import lombok.extern.slf4j.Slf4j;
-import me.cerratolabs.aunidosredirect.dao.ProvinciasDAO;
 import me.cerratolabs.aunidosredirect.db.DatabaseService;
-import me.cerratolabs.aunidosredirect.dto.Provincia;
-import me.cerratolabs.aunidosredirect.dto.SocialMedia;
 import me.cerratolabs.aunidosredirect.request.ProvinciaRequest;
 import me.cerratolabs.aunidosredirect.response.ProvinciaResponse;
-import org.hibernate.dialect.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 
 @RestController
 @Slf4j
 public class ProvinciaService {
-    Logger LOGGER = LoggerFactory.getLogger(ProvinciaService.class);
-    private ProvinciasDAO provinciasdao = new ProvinciasDAO();
 
     @Autowired private DatabaseService dbservice;
+
     @CrossOrigin(origins = "*")
-    @RequestMapping(path="/getSocialMedia", method= RequestMethod.POST)
+    @RequestMapping(path = "/getSocialMedia", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ProvinciaResponse getSocialMedia(@RequestBody ProvinciaRequest request) {
         /*try {
@@ -32,19 +26,33 @@ public class ProvinciaService {
         log.info("</getSocialMedia> " + response.toString());
             return response;
         } catch (Exception e) {
-            String idTransaction = "aunidos-redirect-" + System.currentTimeMillis() + "-getSocialMedia";
+
             log.error("</getSocialMedia> " + idTransaction, e);
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, idTransaction);
         }*/
+
+        String idTransaction = "aunidos-redirect-" + System.currentTimeMillis() + "-getSocialMedia";
         ProvinciaResponse response = new ProvinciaResponse();
-        SocialMedia socialMedia = request.getSocialMedia();
-        Provincia provincia = dbservice.findByName(socialMedia.getProvincia().getName());
-        log.info(provincia.toString());
-        socialMedia = dbservice.findProvinciaByNameAndProvincia(socialMedia.getName(), provincia.getId());
-        log.info(socialMedia.toString());
-        response.setSocialMedia(socialMedia);
-        return response;
+        response.setIdTransaccion(idTransaction);
+        log.info("<getSocialMedia> " + idTransaction + " " +  request.toString());
+        try {
+
+            String url = dbservice.findURLByProvinciaAndAndSocialMedia(request.getProvincia(), request.getSocialMedia());
+            if(ObjectUtils.isEmpty(url)) {
+                response.setStatus(HttpStatus.NOT_FOUND);
+            } else {
+                log.info("</getSocialMedia> " + url);
+                response.setUrl(url);
+                response.setStatus(HttpStatus.OK);
+            }
+
+            return response;
+        } catch (Exception e) {
+            log.error("</getSocialMedia> " + idTransaction, e);
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, idTransaction);
+        }
+
     }
 
-    
+
 }
