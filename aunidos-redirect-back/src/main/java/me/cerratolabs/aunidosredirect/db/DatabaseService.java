@@ -10,10 +10,15 @@ public class DatabaseService {
     @Autowired private ProvinciaRepository provinciaRepository;
     @Autowired private SocialMediaRepository socialMediaRepository;
 
-    public SocialMedia findProvinciaByNameAndProvincia(String name, Long provincia){
+    public SocialMedia findProvinciaByNameAndProvincia(String name, Integer provincia){
        return socialMediaRepository.findProvinciaByNameAndProvincia(name, provincia);
     }
     public Provincia findByName(String name){
         return provinciaRepository.findByName(name);
     }
+
+    public Long findIdByName(String name){
+        return provinciaRepository.findIdByName(name);
+    }
+
 }

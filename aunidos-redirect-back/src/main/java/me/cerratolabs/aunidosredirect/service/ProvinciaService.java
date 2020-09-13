@@ -40,8 +40,11 @@ public class ProvinciaService {
         SocialMedia socialMedia = request.getSocialMedia();
         Provincia provincia = dbservice.findByName(socialMedia.getProvincia().getName());
         log.info(provincia.toString());
-        // socialMedia = dbservice.findProvinciaByNameAndProvincia(socialMedia.getName(), provincia.getId());
+        socialMedia = dbservice.findProvinciaByNameAndProvincia(socialMedia.getName(), provincia.getId());
+        log.info(socialMedia.toString());
         response.setSocialMedia(socialMedia);
         return response;
     }
+
+    
 }

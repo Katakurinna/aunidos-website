@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SocialMediaRepository extends JpaRepository<SocialMedia, Long> {
     @Query
-    SocialMedia findProvinciaByNameAndProvincia(String name, Long provincia);
+    SocialMedia findProvinciaByNameAndProvincia(String name, Integer provincia);
 }

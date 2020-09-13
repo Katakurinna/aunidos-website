@@ -9,12 +9,12 @@ import java.io.Serializable;
 
 @Data
 @ToString
-@Table(name = "PROVINCIAS")
+@Table(name = "PROVINCIA")
 @Entity
 public class Provincia implements Serializable {
 
     @Column(name = "ID")
-    @Id private Long id;
+    @Id private Integer id;
 
     @Column(name = "NAME")
     private String name;

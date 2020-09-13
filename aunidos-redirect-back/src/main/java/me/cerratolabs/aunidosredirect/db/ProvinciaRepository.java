@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface  ProvinciaRepository extends JpaRepository<SocialMedia, Long> {
+public interface  ProvinciaRepository extends JpaRepository<Provincia, Long> {
 
     @Query
     Long findIdByName(String name);
