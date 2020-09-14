@@ -26,10 +26,7 @@ public class DatabaseService {
     }
 
     public void insertNewPassword(Integer provincia, Integer socialMedia, String enlace) {
-        URL url = new URL();
-        url.setId(0);
-        url.setProvincia(provincia);
-        url.setSocialMedia(socialMedia);
+        URL url = urlRepository.findURLByProvinciaAndAndSocialMedia(provincia, socialMedia);
         url.setUrl(enlace);
         this.urlRepository.saveAndFlush(url);
     }
