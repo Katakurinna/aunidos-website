@@ -1,7 +1,8 @@
 export enum HttpStatusEnum {
     OK = 'OK',
     NOT_FOUND = 'NOT_FOUND',
-    INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR'
+    INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
+    UNAUTHORIZED = "UNAUTHORIZED"
 }
 
 export class HttpStatus {
@@ -38,6 +39,11 @@ export class HttpStatus {
             enumString: HttpStatusEnum.INTERNAL_SERVER_ERROR,
             value: 500,
             name: 'INTERNAL_SERVER_ERROR'
+        }, 
+        {
+            enumString: HttpStatusEnum.UNAUTHORIZED,
+            value: 401,
+            name: 'UNAUTHORIZED'
         }
     ];
 

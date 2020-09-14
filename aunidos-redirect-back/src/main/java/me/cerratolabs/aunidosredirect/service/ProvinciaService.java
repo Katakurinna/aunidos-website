@@ -20,23 +20,11 @@ public class ProvinciaService {
     @RequestMapping(path = "/getSocialMedia", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ProvinciaResponse getSocialMedia(@RequestBody ProvinciaRequest request) {
-        /*try {
-        log.info("<getSocialMedia> " + request.toString());
-        ProvinciaResponse response = this.provinciasdao.getSocialMedia(request);
-        log.info("</getSocialMedia> " + response.toString());
-            return response;
-        } catch (Exception e) {
-
-            log.error("</getSocialMedia> " + idTransaction, e);
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, idTransaction);
-        }*/
-
         String idTransaction = "aunidos-redirect-" + System.currentTimeMillis() + "-getSocialMedia";
         ProvinciaResponse response = new ProvinciaResponse();
         response.setIdTransaccion(idTransaction);
         log.info("<getSocialMedia> " + idTransaction + " " +  request.toString());
         try {
-
             String url = dbservice.findURLByProvinciaAndAndSocialMedia(request.getProvincia(), request.getSocialMedia());
             if(ObjectUtils.isEmpty(url)) {
                 response.setStatus(HttpStatus.NOT_FOUND);
@@ -45,13 +33,34 @@ public class ProvinciaService {
                 response.setUrl(url);
                 response.setStatus(HttpStatus.OK);
             }
-
             return response;
         } catch (Exception e) {
             log.error("</getSocialMedia> " + idTransaction, e);
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, idTransaction);
         }
+    }
 
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path = "/addNewURL", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProvinciaResponse addNewURL(@RequestBody ProvinciaRequest request) {
+        String idTransaction = "aunidos-redirect-" + System.currentTimeMillis() + "-addNewURL";
+        ProvinciaResponse response = new ProvinciaResponse();
+        response.setIdTransaccion(idTransaction);
+        log.info("<addNewURL> " + idTransaction + " " +  request.toString());
+        try {
+            if(dbservice.checkIfPasswordIsCorrect(request.getPalabraSeguridad())) {
+                this.dbservice.insertNewPassword(request.getProvincia(), request.getSocialMedia(), request.getUrl());
+                log.info("</addNewURL> " + request.getUrl());
+                response.setStatus(HttpStatus.OK);
+            } else {
+                response.setStatus(HttpStatus.UNAUTHORIZED);
+            }
+            return response;
+        } catch (Exception e) {
+            log.error("</addNewURL> " + idTransaction, e);
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, idTransaction);
+        }
     }
 
 

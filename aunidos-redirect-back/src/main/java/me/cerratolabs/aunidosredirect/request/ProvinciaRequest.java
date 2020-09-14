@@ -8,4 +8,6 @@ import lombok.ToString;
 public class ProvinciaRequest {
     private Integer socialMedia;
     private Integer provincia;
+    private String url;
+    private String palabraSeguridad;
 }

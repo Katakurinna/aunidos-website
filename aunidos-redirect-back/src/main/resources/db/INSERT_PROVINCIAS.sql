@@ -1,4 +1,6 @@
 INSERT INTO provincia
+VALUES (0, 'Global', 'global');
+INSERT INTO provincia
 VALUES (02, 'Albacete', 'albacete');
 INSERT INTO provincia
 VALUES (03, 'Alicante/Alacant', 'alicante');
