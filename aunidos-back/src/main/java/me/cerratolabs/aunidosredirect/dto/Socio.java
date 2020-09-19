@@ -1,22 +1,12 @@
 package me.cerratolabs.aunidosredirect.dto;
 
-import lombok.Data;
-import lombok.ToString;
-import org.springframework.data.relational.core.mapping.Table;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-@Data
-@ToString
-@Table("url")
 @Entity
-public class Socio implements Serializable {
+@Table(name = "socio", schema = "aunidos_redirect")
+public class Socio {
     private String dni;
     private String apellidos;
     private String nombre;
@@ -26,13 +16,13 @@ public class Socio implements Serializable {
     private String domicilio;
     private String poblacion;
     private String codPostal;
-    private String provincia;
+    private Integer provincia;
     private String gremio;
     private Date fecAlta;
     private Date fecBaja;
     private Date fecUltModificacion;
-    private Boolean verificado;
-    private Boolean emailConfirmado;
+    private Byte verificado;
+    private Byte emailConfirmado;
 
     @Id
     @Column(name = "dni")
@@ -126,11 +116,11 @@ public class Socio implements Serializable {
 
     @Basic
     @Column(name = "provincia")
-    public String getProvincia() {
+    public Integer getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(String provincia) {
+    public void setProvincia(Integer provincia) {
         this.provincia = provincia;
     }
 
@@ -176,21 +166,21 @@ public class Socio implements Serializable {
 
     @Basic
     @Column(name = "verificado")
-    public Boolean getVerificado() {
+    public Byte getVerificado() {
         return verificado;
     }
 
-    public void setVerificado(Boolean verificado) {
+    public void setVerificado(Byte verificado) {
         this.verificado = verificado;
     }
 
     @Basic
     @Column(name = "email_confirmado")
-    public Boolean getEmailConfirmado() {
+    public Byte getEmailConfirmado() {
         return emailConfirmado;
     }
 
-    public void setEmailConfirmado(Boolean emailConfirmado) {
+    public void setEmailConfirmado(Byte emailConfirmado) {
         this.emailConfirmado = emailConfirmado;
     }
 

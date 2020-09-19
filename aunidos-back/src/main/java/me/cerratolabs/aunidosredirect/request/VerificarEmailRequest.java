@@ -5,5 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class CrearSocioRequest {
+public class VerificarEmailRequest extends GenericRequest {
+    private String dni;
+    private String codigo;
 }

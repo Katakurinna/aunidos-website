@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "aunidos-socios-front"
+    }
+  },
+  "defaultProject": "aunidos-socios-front",
+  "cli": {
+    "analytics": "6e2ea9b5-59f5-4a4a-9f57-25ce2915b51f"
+  }
 }

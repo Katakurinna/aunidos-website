@@ -2,8 +2,8 @@ package me.cerratolabs.aunidosredirect.db.service;
 
 import me.cerratolabs.aunidosredirect.db.repository.SocioRepository;
 import me.cerratolabs.aunidosredirect.db.repository.CodVerificacionRepository;
-import me.cerratolabs.aunidosredirect.dto.Socio;
 import me.cerratolabs.aunidosredirect.dto.CodVerificacion;
+import me.cerratolabs.aunidosredirect.dto.Socio;
 import me.cerratolabs.aunidosredirect.exceptions.CrearSocioException;
 import me.cerratolabs.aunidosredirect.utils.FechaUtils;
 import me.cerratolabs.aunidosredirect.utils.GenerarCodigo;
@@ -21,48 +21,48 @@ public class SocioDBService {
     @Autowired private SocioRepository socioRepository;
     @Autowired private CodVerificacionRepository codVerificacionRepository;
 
-    public Boolean crearSocio(Socio socio) throws Exception {
+    public void crearSocio(Socio socio) throws Exception {
         SocioUtils.verificarSocio(socio);
         if (existeSocio(socio)) {
             throw new CrearSocioException("El socio ya existe");
         }
         socio.setFecAlta(new Date());
         this.socioRepository.saveAndFlush(socio);
-        return true;
     }
 
-    public Boolean existeSocio(Socio socio) throws Exception {
-        Socio socioExistente = this.socioRepository.findByDniOOrEmailOrTelMovil(socio.getDni(), socio.getEmail(), socio.getTelMovil());
+    public boolean existeSocio(Socio socio) throws Exception {
+        Socio socioExistente = this.socioRepository.findByDni(socio.getDni());
         if (socioExistente != null && socioExistente.getDni() != null) {
             return true;
         }
         return false;
     }
 
-    public CodVerificacion generarCodigoVerificarEmail(String email) throws Exception {
+    public CodVerificacion generarCodigoVerificacion(String dni) throws Exception {
         CodVerificacion codVerificacion = new CodVerificacion();
         String codigo = GenerarCodigo.generar();
-        codVerificacion.setEmail(email);
+        codVerificacion.setDni(dni);
         codVerificacion.setId(0);
         codVerificacion.setCodigo(codigo);
         codVerificacion.setFecCad(new Date(System.currentTimeMillis() + 3700000));
-        this.codVerificacionRepository.removeAllByEmail(FechaUtils.obtenerFechaFormateada(), email);
-        this.codVerificacionRepository.saveAndFlush(codVerificacion);
+        this.codVerificacionRepository.deleteAllByDni(new Date(), dni);
+        this.codVerificacionRepository.save(codVerificacion);
+        this.codVerificacionRepository.flush();
         return codVerificacion;
     }
 
-    public Boolean verificarEmailSocio(String email, String codigo) throws Exception {
+    public boolean verificarEmailSocio(String dni, String codigo) throws Exception {
         // Comprobar si el socio no está ya verificado.
-        Boolean verificado = this.socioRepository.comprobarSiNoEstaVerificado(email);
+        Boolean verificado = this.socioRepository.comprobarSiNoEstaVerificado(dni);
         if (verificado != null && !verificado) throw new CrearSocioException("El socio ya está verificado");
         // Comprobar si el código y el email son correctos.
-        CodVerificacion codVerificacion = this.codVerificacionRepository.findByEmailAndCodigoAndFecCadIsNull(email, codigo);
+        CodVerificacion codVerificacion = this.codVerificacionRepository.findByDniAndCodigoAndFecCadIsNull(dni, codigo);
 
-        if (codVerificacion == null || codVerificacion.getEmail() == null)
-            throw new CrearSocioException("El codigo o email no es correcto.");
+        if (codVerificacion == null || codVerificacion.getDni() == null)
+            return false;
 
-        this.socioRepository.confirmarEmailSocio(email);
-        this.codVerificacionRepository.removeAllByEmail(FechaUtils.obtenerFechaFormateada(), email);
+        this.socioRepository.confirmarEmailSocio(dni);
+        this.codVerificacionRepository.deleteAllByDni(new Date(), dni);
         return true;
     }
 
@@ -96,13 +96,14 @@ public class SocioDBService {
 
     public List<Socio> obtenerSociosPorProvincia(Integer provincia) throws Exception {
         if (ObjectUtils.isEmpty(provincia)) return null;
-        return this.socioRepository.findAllByProvinciaAAndFecBajaIsNull(provincia);
+        return this.socioRepository.findAllByProvinciaAndFecBajaIsNull(provincia);
     }
 
     public boolean modificarSocio(Socio socio) throws Exception {
         if (socio == null) return false;
-        if (!this.socioRepository.existsByDniOrEmailOrTelMovil(socio.getDni(), socio.getEmail(), socio.getTelMovil()))
+        if (!this.socioRepository.existsByDni(socio.getDni()))
             return false;
+        socio.setFecUltModificacion(new Date());
         this.socioRepository.saveAndFlush(socio);
         return true;
     }

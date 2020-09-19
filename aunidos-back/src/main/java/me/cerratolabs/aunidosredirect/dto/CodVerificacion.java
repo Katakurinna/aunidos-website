@@ -1,15 +1,14 @@
 package me.cerratolabs.aunidosredirect.dto;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "cod_verificacion", schema = "aunidos_redirect")
-public class CodVerificacion implements Serializable {
+@Table(name = "cod_verificacion", schema = "aunidos_redirect", catalog = "")
+public class CodVerificacion {
     private int id;
-    private String email;
+    private String dni;
     private String codigo;
     private Date fecCad;
 
@@ -24,13 +23,13 @@ public class CodVerificacion implements Serializable {
     }
 
     @Basic
-    @Column(name = "email")
-    public String getEmail() {
-        return email;
+    @Column(name = "dni")
+    public String getDni() {
+        return dni;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     @Basic
@@ -57,15 +56,15 @@ public class CodVerificacion implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CodVerificacion codVerificacion = (CodVerificacion) o;
-        return id == codVerificacion.id &&
-            Objects.equals(email, codVerificacion.email) &&
-            Objects.equals(codigo, codVerificacion.codigo) &&
-            Objects.equals(fecCad, codVerificacion.fecCad);
+        CodVerificacion that = (CodVerificacion) o;
+        return id == that.id &&
+            Objects.equals(dni, that.dni) &&
+            Objects.equals(codigo, that.codigo) &&
+            Objects.equals(fecCad, that.fecCad);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, codigo, fecCad);
+        return Objects.hash(id, dni, codigo, fecCad);
     }
 }

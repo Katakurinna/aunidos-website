@@ -1,6 +1,7 @@
 CREATE TABLE cod_verificacion (
     id INT PRIMARY KEY auto_increment,
-    email VARCHAR(80),
+    dni VARCHAR(20),
     codigo VARCHAR(10),
-    fec_cad DATE
+    fec_cad DATE,
+    FOREIGN KEY (dni) REFERENCES socio(dni)
 );
