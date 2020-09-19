@@ -99,6 +99,6 @@ export class AniadirURLComponent implements OnInit {
 
   private errorThrow(reason) {
     this.messageClass = 'alert alert-danger';
-    this.messageText = `No se ha podido redirigir a ${this.socialMediaSeleccionada.name} de la provincia de ${this.provinciaSeleccionada.name}. Error: ${reason.message}. Id de transacción: ${reason.error.message}`;
+    this.messageText = `Ha habido un problema interno en el servidor. Error: ${reason.message}. Id de transacción: ${reason.error.message}`;
   }
 }
