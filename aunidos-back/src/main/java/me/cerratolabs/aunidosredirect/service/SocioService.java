@@ -27,7 +27,7 @@ public class SocioService {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/crearSocio", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public SocioResponse crearSocio(@RequestBody SocioRequest request) {
+    public SocioResponse crearSocio(@RequestBody SocioRequest request, ) {
         SocioResponse response = new SocioResponse();
         Transaccion transaccion = new Transaccion();
         transaccion.setIdTransaccion(request.getTransaccion().getIdTransaccion());
